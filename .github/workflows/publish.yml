@@ -25,3 +25,10 @@ jobs:
         -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
         -d "{ \"tag_name\": \"${{ steps.get-tag.outputs.tag }}\", \"name\": \"Release ${{ steps.get-tag.outputs.tag }}\" }" \
         https://api.github.com/repos/${{ github.repository }}/releases
+    - name: Upload an asset to the GitHub Release
+      run: |
+        curl -X POST \
+        -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        -H "Content-Type: application/octet-stream" \
+        https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.get-tag.outputs.tag }}/assets?name=README.md \
+        --data-binary "@README.md"
