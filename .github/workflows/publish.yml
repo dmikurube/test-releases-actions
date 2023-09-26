@@ -39,6 +39,6 @@ jobs:
             core.setFailed(error.message);
           }
     - name: Print the RELEASE_ID
-      run: echo ${{ env.RELEASE_ID }}
+      run: echo "${{ env.RELEASE_ID }}"
     - name: Print the RELEASE_UPLOAD_URL
-      run: echo ${{ env.RELEASE_UPLOAD_URL }}
+      run: echo "${{ env.RELEASE_UPLOAD_URL }}"
