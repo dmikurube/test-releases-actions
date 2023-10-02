@@ -42,3 +42,43 @@ jobs:
       run: echo "${{ env.RELEASE_ID }}"
     - name: Print the RELEASE_UPLOAD_URL
       run: echo "${{ env.RELEASE_UPLOAD_URL }}"
+    - name: Upload an Asset in GitHub Release
+      uses: "actions/github-script@v6"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+        script: |
+         console.log('environment', process.versions);
+         console.log({ context.repo.owner, context.repo.repo, context.sha });
+         const fs = require('fs').promises;
+         await github.rest.repos.uploadReleaseAsset({
+           owner: context.repo.owner,
+           repo: context.repo.repo,
+           release_id: ${{ env.RELEASE_ID }},
+           name: 'README.md',
+           data: await fs.readFile('./README.md')
+         });
+    #- name: Upload artifacts
+    #  uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410
+    #  with:
+    #    github-token: ${{secrets.GITHUB_TOKEN}}
+    #    script: |
+    #      console.log('environment', process.versions);
+    #
+    #      const fs = require('fs').promises;
+    #
+    #      const { repo: { owner, repo }, sha } = context;
+    #      console.log({ owner, repo, sha });
+    #
+    #      await github.rest.repos.uploadReleaseAsset({
+    #        owner, repo,
+    #        release_id: ${{ github.event.inputs.release }},
+    #        name: 'oh-my-posh.json',
+    #        data: await fs.readFile('./packages/scoop/dist/oh-my-posh.json')
+    #      });
+    #- name: Upload an asset to the GitHub Release
+    #  run: |
+    #    curl -X POST \
+    #    -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+    #    -H "Content-Type: application/octet-stream" \
+    #    https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.get-tag.outputs.tag }}/assets?name=README.md \
+    #    --data-binary "@README.md"
