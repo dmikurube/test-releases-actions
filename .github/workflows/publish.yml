@@ -49,7 +49,7 @@ jobs:
         script: |
           console.log("foo");
           console.log('environment', process.versions);
-    #     console.log({ context.repo.owner, context.repo.repo, context.sha });
+          console.log({ context.repo.owner, context.repo.repo, context.sha });
     #     const fs = require('fs').promises;
     #     await github.rest.repos.uploadReleaseAsset({
     #       owner: context.repo.owner,
