@@ -52,14 +52,14 @@ jobs:
           console.log(context.repo.owner);
           console.log(context.repo.repo);
           console.log(context.sha);
-    #     const fs = require('fs').promises;
-    #     await github.rest.repos.uploadReleaseAsset({
-    #       owner: context.repo.owner,
-    #       repo: context.repo.repo,
-    #       release_id: ${{ env.RELEASE_ID }},
-    #       name: 'README.md',
-    #       data: await fs.readFile('./README.md')
-    #     });
+          const fs = require('fs').promises;
+          await github.rest.repos.uploadReleaseAsset({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            release_id: ${{ env.RELEASE_ID }},
+            name: 'README.md',
+            data: await fs.readFile('./README.md')
+          });
     #- name: Upload artifacts
     #  uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410
     #  with:
